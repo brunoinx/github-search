@@ -1,8 +1,8 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.TouchableOpacity`
-  width: 350px;
-  height: 80px;
+  width: 86%;
+  height: 70px;
   border-radius: 14px;
   background-color: #eee;
   flex-direction: row;
@@ -13,19 +13,18 @@ export const Container = styled.TouchableOpacity`
 
 export const WrapperUser = styled.View`
   flex-direction: row;
-  flex: 0.53;
   justify-content: space-between;
   align-items: center;
 `;
 
 export const Avatar = styled.Image`
-  height: 60px;
-  width: 60px;
+  height: 50px;
+  width: 50px;
   border-radius: 12px;
-  margin-left: 8px;
+  margin: 0 10px;
 `;
 
 export const UserName = styled.Text`
   color: #898383;
-  font-size: 22px;
+  font-size: 20px;
 `;

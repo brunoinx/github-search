@@ -1,15 +1,22 @@
-import { Entypo } from '@expo/vector-icons';
 import React from 'react';
+import { useNavigation } from "@react-navigation/native";
+import { Entypo } from '@expo/vector-icons';
 
 import * as S from './styles';
 
-function CardUserGithub({ avatar, username }) {
+function CardUserGithub({ avatar, name }) {
+  const navigation = useNavigation();
+
+  const handleNavigateToRepo = () => {
+    navigation.navigate("UserRepo");
+  };
+  
   return (
-    <S.Container activeOpacity={0.7}>
+    <S.Container activeOpacity={0.7} onPress={handleNavigateToRepo}>
       <S.WrapperUser>
         <S.Avatar source={{ uri: avatar }} />
 
-        <S.UserName>{username}</S.UserName>
+        <S.UserName>{name}</S.UserName>
       </S.WrapperUser>
 
       <Entypo name="chevron-small-right" size={32} color="#898383" />

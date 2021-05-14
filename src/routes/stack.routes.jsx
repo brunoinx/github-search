@@ -1,8 +1,7 @@
 import React from "react";
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Home from "../screens/Home";
-import UserRepo from '../components/UserRepo';
+import UserRepo from '../screens/UserRepo';
 import TabRoutes from './tab.routes';
 
 const { Navigator, Screen } = createStackNavigator();
@@ -10,9 +9,11 @@ const { Navigator, Screen } = createStackNavigator();
 const AppStack = () => {
   return (
     <Navigator headerMode={"none"}>
-      <Screen name="Home" component={Home} />
+      <Screen
+        name="Home"
+        component={TabRoutes}
+      />
       <Screen name="UserRepo" component={UserRepo} />
-      <Screen name="Favoritos" component={TabRoutes} />
     </Navigator>
   );
 };

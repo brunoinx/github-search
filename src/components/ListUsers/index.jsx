@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList } from 'react-native';
 
 import { FontAwesome } from "@expo/vector-icons";
@@ -22,6 +23,17 @@ function ListUsers({ labelVoid, title }) {
     setIsFilled(true);
   };
 
+  useEffect(() => {
+    const storageDataUsers = async () => {
+      try {
+        const jsonValue = JSON.stringify(userList);
+        await AsyncStorage.setItem("@gitusers:user", jsonValue);
+        await AsyncStorage.setItem("@gitusers:inputname", userInput);
+      } catch {}
+    };
+
+    storageDataUsers();
+  }, [userList]);
 
   return (
     <>
@@ -49,7 +61,11 @@ function ListUsers({ labelVoid, title }) {
             keyExtractor={(item) => String(item.id)}
             data={userList}
             renderItem={({ item }) => (
-              <CardUserGithub avatar={item.avatar_url} name={item.login} />
+              <CardUserGithub
+                avatar={item.avatar_url}
+                name={item.login}
+                icon="chevron-small-right"
+              />
             )}
             showsVerticalScrollIndicator={false}
           />

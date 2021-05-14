@@ -3,7 +3,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Home from '../screens/Home';
-import ListUsers from "../components/ListUsers";
+import FavoritedUsers from "../screens/FavoritedUsers";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -13,12 +13,14 @@ export default function TabRoutes() {
       tabBarOptions={{
         activeTintColor: "#040404",
         inactiveTintColor: "#898383",
-        labelPosition: "beside-icon",
+        labelPosition: "below-icon",
         style: {
-          height: 60,
+          height: 64,
           alignItems: "center",
+          justifyContent: 'center',
           borderTopColor: "#d6d6d6",
           borderTopWidth: 2,
+          paddingBottom: 10
         },
       }}
     >
@@ -34,7 +36,7 @@ export default function TabRoutes() {
 
       <Screen
         name="Favoritos"
-        component={ListUsers}
+        component={FavoritedUsers}
         options={{
           tabBarIcon: ({ size, color }) => (
             <FontAwesome name="heart" size={size} color={color} />

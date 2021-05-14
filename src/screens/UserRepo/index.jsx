@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/core";
 import { FontAwesome } from '@expo/vector-icons';
 import api from "../../service/api";
 
@@ -12,15 +14,24 @@ const UserRepo = () => {
   const [repoList, setRepoList] = useState([]);
   const [isFavorited, setIsFavorited] = useState(false);
 
+  const navigation = useNavigation();
+  
   useEffect(() => {
     const handleSearchRepos = async () => {
-      const { data } = await api.get(`users/brunoinx/repos`);
-
+      const username = await AsyncStorage.getItem("@gitusers:inputname");
+      
+      const { data } = await api.get(`users/${username}/repos`);
+      
       setRepoList(data);
     };
-
     handleSearchRepos();
   }, []);
+
+  const handleNavigateToFavorites = () => {
+    setIsFavorited((oldState) => !oldState);
+
+    navigation.navigate('Favoritos');
+  }
 
   return (
     <S.Container>
@@ -32,7 +43,7 @@ const UserRepo = () => {
 
           <S.ButtonFavorited
             activeOpacity={0.7}
-            onPress={() => setIsFavorited((oldState) => !oldState)}
+            onPress={handleNavigateToFavorites}
           >
             <FontAwesome
               name="heart"

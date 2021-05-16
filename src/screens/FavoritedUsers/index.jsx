@@ -32,18 +32,13 @@ const FavoritedUsers = () => {
         ? JSON.parse(userStoraged)
         : {};
 
-      const usersFormated = { id, login, avatar_url, isFavorited };
+      const usersFormated = { id, login, avatar_url };
       console.log(usersFormated);
 
-      const alreadyFav = userListFavorited.includes(usersFormated);
-      console.log(alreadyFav);
+      setUserListFavorited((oldState) => [...oldState, usersFormated]);
 
-      if (!alreadyFav) {
-        setUserListFavorited((oldState) => [...oldState, usersFormated]);
-        return;
-      }
-
-      setUserListFavorited((oldState) => oldState);
+      const jsonValue = JSON.stringify(userListFavorited);
+      await AsyncStorage.setItem("@gitusers:user", jsonValue);
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +57,7 @@ const FavoritedUsers = () => {
       <S.MainContent>
         <S.Title>Meus Favoritos</S.Title>
 
-        {(isFavorited || userListFavorited === []) && (
+        {userListFavorited !== [] && (
           <FlatList
             data={userListFavorited}
             keyExtractor={(item) => String(item.id)}

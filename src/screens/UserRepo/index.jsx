@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/core";
+import { useFocusEffect } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 import api from "../../service/api";
 
@@ -30,6 +31,12 @@ const UserRepo = () => {
     };
     handleSearchRepos();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      setIsFavorited(false);
+    }, [])
+  );
 
   const handleNavigateToFavorites = () => {
     setIsFavorited((oldState) => !oldState);

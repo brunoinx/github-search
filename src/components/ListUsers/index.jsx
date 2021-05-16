@@ -28,7 +28,7 @@ function ListUsers({ labelVoid, title }) {
 
   const handleNavigateToRepo = async (item) => {
     try {
-      await AsyncStorage.setItem("@gitusers:inputname", userInput);
+      await AsyncStorage.setItem("@gitusers:inputname", userList[item].login);
 
       const userJson = JSON.stringify(userList[item]);
       await AsyncStorage.setItem("@gitusers:user", userJson);

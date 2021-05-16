@@ -13,7 +13,6 @@ import CardUserGithub from "../../components/CardUserGithub";
 const FavoritedUsers = () => {
   const [userListFavorited, setUserListFavorited] = useState([]);
   const { isFavorited, setIsFavorited } = useFavorited(false);
-  const { isFocused, setIsFocused } = useState(false);
 
   const handleExcludeUserFavorite = async (id) => {
     try {
@@ -21,7 +20,6 @@ const FavoritedUsers = () => {
       setUserListFavorited(newFavs);
 
       await AsyncStorage.removeItem("@gitusers:user");
-      setIsFocused(true);
     } catch (err) {
       console.error(err);
     }
@@ -54,7 +52,7 @@ const FavoritedUsers = () => {
   useFocusEffect(
     useCallback(() => {
       loadFavorites();
-    }, [isFocused])
+    }, [])
   );
 
   return (

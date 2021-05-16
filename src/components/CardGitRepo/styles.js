@@ -1,8 +1,10 @@
-import styled from 'styled-components/native';
+import { Dimensions } from "react-native";
+import styled from "styled-components/native";
+
+const width = Math.floor(Dimensions.get("window").width);
 
 export const Container = styled.TouchableOpacity`
-  width: 92%;
-  height: 70px;
+  width: ${width - 25}px;
   border-radius: 14px;
   background-color: #eee;
   margin: 5px 0;

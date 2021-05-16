@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/core";
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from "@expo/vector-icons";
 import api from "../../service/api";
 
 import * as S from "./styles";
@@ -14,17 +14,19 @@ import CardGitRepo from "../../components/CardGitRepo";
 const UserRepo = () => {
   const { isFavorited, setIsFavorited } = useFavorited(false);
   const [repoList, setRepoList] = useState([]);
+  const [username, setUserName] = useState("");
 
   const navigation = useNavigation();
-  
+
   // Carregar os repositórios
   useEffect(() => {
     const handleSearchRepos = async () => {
       const username = await AsyncStorage.getItem("@gitusers:inputname");
-      
+
       const { data } = await api.get(`users/${username}/repos`);
-      
+
       setRepoList(data);
+      setUserName(username);
     };
     handleSearchRepos();
   }, []);
@@ -33,9 +35,9 @@ const UserRepo = () => {
     setIsFavorited((oldState) => !oldState);
 
     if (!isFavorited) {
-      return navigation.navigate('Favoritos');
+      return navigation.navigate("Favoritos");
     }
-  }
+  };
 
   return (
     <S.Container>
@@ -43,7 +45,7 @@ const UserRepo = () => {
 
       <S.MainContent>
         <S.WrapperTitle>
-          <S.TitleListRepo>Favoritar repositório?</S.TitleListRepo>
+          <S.TitleListRepo>Favoritar {username}?</S.TitleListRepo>
 
           <S.ButtonFavorited
             activeOpacity={0.7}

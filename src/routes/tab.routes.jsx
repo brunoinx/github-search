@@ -1,8 +1,8 @@
 import React from "react";
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import Home from '../screens/Home';
+import Home from "../screens/Home";
 import FavoritedUsers from "../screens/FavoritedUsers";
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -11,16 +11,18 @@ export default function TabRoutes() {
   return (
     <Navigator
       tabBarOptions={{
+        keyboardHidesTabBar: true,
         activeTintColor: "#040404",
         inactiveTintColor: "#898383",
         labelPosition: "below-icon",
+        labelStyle: { fontSize: 12 },
         style: {
-          height: 64,
+          height: 58,
           alignItems: "center",
-          justifyContent: 'center',
+          justifyContent: "center",
           borderTopColor: "#d6d6d6",
           borderTopWidth: 2,
-          paddingBottom: 10
+          paddingVertical: 10,
         },
       }}
     >

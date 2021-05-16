@@ -31,3 +31,5 @@ export const Title = styled.Text`
   margin-top: 26px;
   margin-bottom: 20px;
 `;
+
+export const TrashButton = styled.TouchableOpacity``;

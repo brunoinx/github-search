@@ -1,5 +1,5 @@
-import Constants from 'expo-constants';
-import styled from 'styled-components/native';
+import Constants from "expo-constants";
+import styled from "styled-components/native";
 
 const statusBarHeight = Constants.statusBarHeight;
 
@@ -12,7 +12,6 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const MainContent = styled.View`
-  flex: 1;
   width: 100%;
   align-items: center;
 

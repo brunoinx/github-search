@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
 export const WrapperInput = styled.View`
   width: 100%;
@@ -6,7 +6,7 @@ export const WrapperInput = styled.View`
   align-items: center;
   justify-content: space-around;
 
-  margin: 42px 0;
+  margin: 42px 0 20px;
 `;
 
 export const InputSearch = styled.TextInput`

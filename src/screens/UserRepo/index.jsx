@@ -7,15 +7,17 @@ import api from "../../service/api";
 
 import * as S from "./styles";
 
+import { useFavorited } from "../../contexts/FavoritesContext";
 import Header from "../../components/Header";
 import CardGitRepo from "../../components/CardGitRepo";
 
 const UserRepo = () => {
+  const { isFavorited, setIsFavorited } = useFavorited(false);
   const [repoList, setRepoList] = useState([]);
-  const [isFavorited, setIsFavorited] = useState(false);
 
   const navigation = useNavigation();
   
+  // Carregar os repositórios
   useEffect(() => {
     const handleSearchRepos = async () => {
       const username = await AsyncStorage.getItem("@gitusers:inputname");
@@ -30,7 +32,9 @@ const UserRepo = () => {
   const handleNavigateToFavorites = () => {
     setIsFavorited((oldState) => !oldState);
 
-    navigation.navigate('Favoritos');
+    if (!isFavorited) {
+      return navigation.navigate('Favoritos');
+    }
   }
 
   return (
@@ -58,6 +62,7 @@ const UserRepo = () => {
           data={repoList}
           renderItem={({ item }) => <CardGitRepo name={item.name} />}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 10 }}
         />
       </S.MainContent>
     </S.Container>

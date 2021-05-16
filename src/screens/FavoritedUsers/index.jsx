@@ -1,28 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useCallback } from "react";
 import { FlatList } from "react-native";
+import { Entypo } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 import * as S from "./styles";
+
+import { useFavorited } from "../../contexts/FavoritesContext";
 
 import Header from "../../components/Header";
 import CardUserGithub from "../../components/CardUserGithub";
 
 const FavoritedUsers = () => {
   const [userListFavorited, setUserListFavorited] = useState([]);
-  
-  useEffect(() => {
-    const getDataStorage = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem("@gitusers:user");
-        jsonValue !== null ? JSON.parse(jsonValue) : null;
-        setUserListFavorited(jsonValue);
-      } catch (error) {
-        console.log(error);
+  const { isFavorited, setIsFavorited } = useFavorited(false);
+  const { isFocused, setIsFocused } = useState(false);
+
+  const handleExcludeUserFavorite = async (id) => {
+    try {
+      const newFavs = userListFavorited.filter((user) => user.id !== id);
+      setUserListFavorited(newFavs);
+
+      await AsyncStorage.removeItem("@gitusers:user");
+      setIsFocused(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const loadFavorites = async () => {
+    try {
+      const userStoraged = await AsyncStorage.getItem("@gitusers:user");
+      const { id, login, avatar_url } = userStoraged
+        ? JSON.parse(userStoraged)
+        : {};
+
+      const usersFormated = { id, login, avatar_url, isFavorited };
+      console.log(usersFormated);
+
+      const alreadyFav = userListFavorited.includes(usersFormated);
+      console.log(alreadyFav);
+
+      if (!alreadyFav) {
+        setUserListFavorited((oldState) => [...oldState, usersFormated]);
+        return;
       }
-    };
 
-    getDataStorage();
-  }, []);
+      setUserListFavorited((oldState) => oldState);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  console.log(userListFavorited);
+  useFocusEffect(
+    useCallback(() => {
+      loadFavorites();
+    }, [isFocused])
+  );
 
   return (
     <S.Container>
@@ -31,18 +64,27 @@ const FavoritedUsers = () => {
       <S.MainContent>
         <S.Title>Meus Favoritos</S.Title>
 
-        <FlatList
-          keyExtractor={(item) => String(item.id)}
-          data={userListFavorited}
-          renderItem={({ item }) => (
-            <CardUserGithub
-              avatar={item.avatar_url}
-              name={item.login}
-              icon="trash"
-            />
-          )}
-          showsVerticalScrollIndicator={false}
-        />
+        {(isFavorited || userListFavorited === []) && (
+          <FlatList
+            data={userListFavorited}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => (
+              <CardUserGithub
+                name={item.login}
+                avatar={item.avatar_url}
+                icon="trash"
+              >
+                <S.TrashButton
+                  activeOpacity={0.6}
+                  onPress={() => handleExcludeUserFavorite(item.id)}
+                >
+                  <Entypo name="trash" size={24} color="#e5383b" />
+                </S.TrashButton>
+              </CardUserGithub>
+            )}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
       </S.MainContent>
     </S.Container>
   );

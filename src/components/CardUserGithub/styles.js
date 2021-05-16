@@ -1,7 +1,10 @@
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 
+const widthScreen = Math.floor(Dimensions.get('window'). width);
+
 export const Container = styled.TouchableOpacity`
-  width: 86%;
+  width: ${widthScreen - 46}px;
   height: 70px;
   border-radius: 14px;
   background-color: #eee;
@@ -9,6 +12,7 @@ export const Container = styled.TouchableOpacity`
   justify-content: space-between;
   align-items: center;
   margin: 5px 0;
+  padding: 0 10px;
 `;
 
 export const WrapperUser = styled.View`

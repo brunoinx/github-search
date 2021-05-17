@@ -30,10 +30,9 @@ function ListUsers({ labelVoid, title }) {
     try {
       await AsyncStorage.setItem("@gitusers:inputname", userList[item].login);
 
-      const userJson = JSON.stringify(userList[item]);
-      await AsyncStorage.setItem("@gitusers:user", userJson);
+      const { id, login, avatar_url } = userList[item];
 
-      navigation.navigate("UserRepo");
+      navigation.navigate("UserRepo", { id, login, avatar_url });
     } catch (e) {
       console.log(e);
     }

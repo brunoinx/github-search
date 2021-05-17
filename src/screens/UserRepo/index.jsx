@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { FlatList } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/core";
-import { useFocusEffect } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation, useRoute } from "@react-navigation/core";
+import { useFocusEffect } from "@react-navigation/native";
 import api from "../../service/api";
 
 import * as S from "./styles";
@@ -13,11 +13,17 @@ import Header from "../../components/Header";
 import CardGitRepo from "../../components/CardGitRepo";
 
 const UserRepo = () => {
-  const { isFavorited, setIsFavorited } = useFavorited(false);
-  const [repoList, setRepoList] = useState([]);
+  const { isFavorited, setIsFavorited } = useFavorited();
+
   const [username, setUserName] = useState("");
+  const [repoList, setRepoList] = useState([]);
 
   const navigation = useNavigation();
+
+  const { params } = useRoute();
+  const user = params;
+
+  // const userFormated = { id, login, avatar_url, favorited: isFavorited };
 
   // Carregar os repositórios
   useEffect(() => {
@@ -38,11 +44,18 @@ const UserRepo = () => {
     }, [])
   );
 
-  const handleNavigateToFavorites = () => {
-    setIsFavorited((oldState) => !oldState);
+  const handleStorageUserToFavorites = async () => {
+    try {
+      const jsonUser = JSON.stringify(user);
+      await AsyncStorage.setItem("@gitusers:favorites", jsonUser);
 
-    if (!isFavorited) {
-      return navigation.navigate("Favoritos");
+      setIsFavorited((oldState) => !oldState);
+
+      if (!isFavorited) {
+        return navigation.navigate("Favoritos");
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -56,7 +69,7 @@ const UserRepo = () => {
 
           <S.ButtonFavorited
             activeOpacity={0.7}
-            onPress={handleNavigateToFavorites}
+            onPress={handleStorageUserToFavorites}
           >
             <FontAwesome
               name="heart"

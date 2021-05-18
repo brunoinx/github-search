@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 const width = Math.floor(Dimensions.get("window").width);
 
 export const Container = styled.TouchableOpacity`
-  width: ${width - 25}px;
+  width: ${width - 45}px;
   border-radius: 14px;
   background-color: #eee;
   margin: 5px 0;

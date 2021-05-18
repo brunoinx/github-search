@@ -4,6 +4,7 @@ export const FavoritesContext = createContext();
 
 export default function FavoritesProvider({ children }) {
   const [isFavorited, setIsFavorited] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [userListFavorited, setUserListFavorited] = useState([]);
 
   return (
@@ -13,6 +14,8 @@ export default function FavoritesProvider({ children }) {
         setIsFavorited,
         userListFavorited,
         setUserListFavorited,
+        isLoading,
+        setIsLoading,
       }}
     >
       {children}
@@ -27,6 +30,8 @@ export function useFavorited() {
     setIsFavorited,
     userListFavorited,
     setUserListFavorited,
+    isLoading,
+    setIsLoading,
   } = context;
 
   if (!context) throw new Error("Context is not missing");
@@ -36,5 +41,7 @@ export function useFavorited() {
     setIsFavorited,
     userListFavorited,
     setUserListFavorited,
+    isLoading,
+    setIsLoading,
   };
 }

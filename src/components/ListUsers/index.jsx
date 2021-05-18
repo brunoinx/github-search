@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import { FlatList, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import * as S from "./styles";
 
 import CardUserGithub from "../../components/CardUserGithub";
+import octoCatImage from "../../assets/octocat.png";
 import api from "../../service/api";
 
-import octoCatImage from "../../assets/octocat.png";
-
 function ListUsers({ labelVoid, title }) {
-  const navigation = useNavigation();
-
   const [userInput, setUserInput] = useState("");
   const [userList, setUserList] = useState([]);
   const [isFilled, setIsFilled] = useState(false);
+
+  const navigation = useNavigation();
 
   const handleSearchUser = async () => {
     const { data } = await api.get(`search/users?q=${userInput}`);

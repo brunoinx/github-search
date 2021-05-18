@@ -5,15 +5,15 @@ export const FavoritesContext = createContext();
 export default function FavoritesProvider({ children }) {
   const [isFavorited, setIsFavorited] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [userListFavorited, setUserListFavorited] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   return (
     <FavoritesContext.Provider
       value={{
         isFavorited,
         setIsFavorited,
-        userListFavorited,
-        setUserListFavorited,
+        favorites,
+        setFavorites,
         isLoading,
         setIsLoading,
       }}
@@ -28,8 +28,8 @@ export function useFavorited() {
   const {
     isFavorited,
     setIsFavorited,
-    userListFavorited,
-    setUserListFavorited,
+    favorites,
+    setFavorites,
     isLoading,
     setIsLoading,
   } = context;
@@ -39,8 +39,8 @@ export function useFavorited() {
   return {
     isFavorited,
     setIsFavorited,
-    userListFavorited,
-    setUserListFavorited,
+    favorites,
+    setFavorites,
     isLoading,
     setIsLoading,
   };

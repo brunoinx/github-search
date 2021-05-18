@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { FlatList } from "react-native";
+import { FlatList, ActivityIndicator } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, useRoute } from "@react-navigation/core";
@@ -13,17 +13,15 @@ import Header from "../../components/Header";
 import CardGitRepo from "../../components/CardGitRepo";
 
 const UserRepo = () => {
-  const { isFavorited, setIsFavorited } = useFavorited();
-
   const [username, setUserName] = useState("");
   const [repoList, setRepoList] = useState([]);
+  const { isFavorited, setIsFavorited, isLoading, setIsLoading } =
+    useFavorited();
 
   const navigation = useNavigation();
 
   const { params } = useRoute();
-  const user = params;
-
-  // const userFormated = { id, login, avatar_url, favorited: isFavorited };
+  const { id, login, avatar_url } = params;
 
   // Carregar os repositórios
   useEffect(() => {
@@ -34,6 +32,7 @@ const UserRepo = () => {
 
       setRepoList(data);
       setUserName(username);
+      setIsLoading(false);
     };
     handleSearchRepos();
   }, []);
@@ -41,12 +40,13 @@ const UserRepo = () => {
   useFocusEffect(
     useCallback(() => {
       setIsFavorited(false);
+      setIsLoading(true);
     }, [])
   );
 
   const handleStorageUserToFavorites = async () => {
     try {
-      const jsonUser = JSON.stringify(user);
+      const jsonUser = JSON.stringify({ id, login, avatar_url });
       await AsyncStorage.setItem("@gitusers:favorites", jsonUser);
 
       setIsFavorited((oldState) => !oldState);
@@ -79,13 +79,17 @@ const UserRepo = () => {
           </S.ButtonFavorited>
         </S.WrapperTitle>
 
-        <FlatList
-          keyExtractor={(item) => String(item.id)}
-          data={repoList}
-          renderItem={({ item }) => <CardGitRepo name={item.name} />}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 10 }}
-        />
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#365CE5" />
+        ) : (
+          <FlatList
+            keyExtractor={(item) => String(item.id)}
+            data={repoList}
+            renderItem={({ item }) => <CardGitRepo name={item.name} />}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 10 }}
+          />
+        )}
       </S.MainContent>
     </S.Container>
   );

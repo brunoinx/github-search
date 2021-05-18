@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { FlatList, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Alert, FlatList, Text } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
 import * as S from "./styles";
+
+import getFavorites from "../../storage/getFavorites";
 
 import { useFavorited } from "../../contexts/FavoritesContext";
 
@@ -15,40 +16,34 @@ const FavoritedUsers = () => {
   const [favorites, setFavorites] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  useFocusEffect(
-    useCallback(() => {
-      async function loadFavorites() {
-        try {
-          const user = await AsyncStorage.getItem("@gitusers:favorites");
+  useEffect(() => {
+    async function loadFavorites() {
+      try {
+        const user = await AsyncStorage.getItem("@gitusers:favorites");
 
-          if (user === null) {
-            setFavorites((oldState) => oldState);
-            return;
-          }
-
-          const jsonUser = JSON.parse(user);
-
-          const alreadyExist = favorites.findIndex(
-            (item) => item.id === jsonUser.id
-          );
-
-          console.log(alreadyExist);
-
-          if (alreadyExist < 0) {
-            setFavorites((oldState) => [...oldState, jsonUser]);
-          } else {
-            setFavorites((oldState) => oldState);
-          }
-
-          setIsLoaded(true);
-        } catch (error) {
-          console.log(`deu erro rapaziada :( ${error}`);
+        if (user === null) {
+          setFavorites((oldState) => oldState);
+          return;
         }
-      }
 
-      loadFavorites();
-    }, [isLoaded, isFavorited])
-  );
+        const jsonUser = JSON.parse(user);
+
+        const alreadyExist = favorites.findIndex(
+          (item) => item.id === jsonUser.id
+        );
+
+        if (alreadyExist < 0) {
+          setFavorites((oldState) => [...oldState, jsonUser]);
+        } else {
+          setFavorites((oldState) => oldState);
+        }
+      } catch (error) {
+        console.log(`deu erro rapaziada :( ${error}`);
+      }
+    }
+
+    loadFavorites();
+  }, [isLoaded, isFavorited]);
 
   const handleExcludeUserFavorite = async (id) => {
     try {
@@ -56,6 +51,7 @@ const FavoritedUsers = () => {
       setFavorites(newFavs);
 
       await AsyncStorage.removeItem("@gitusers:favorites");
+      setIsLoaded(false);
     } catch (err) {
       console.error(err);
     }
@@ -68,7 +64,7 @@ const FavoritedUsers = () => {
       <S.MainContent>
         <S.Title>Meus Favoritos</S.Title>
 
-        {favorites !== [] && isFavorited ? (
+        {favorites !== [] && isLoaded ? (
           <FlatList
             data={favorites}
             keyExtractor={(item) => String(item.id)}
@@ -87,6 +83,7 @@ const FavoritedUsers = () => {
               </CardUserGithub>
             )}
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ marginBottom: 100 }}
           />
         ) : (
           <Text>LISTA VAZIA</Text>

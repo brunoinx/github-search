@@ -1,12 +1,12 @@
-import { Dimensions } from 'react-native';
-import styled from 'styled-components/native';
+import { Dimensions } from "react-native";
+import styled from "styled-components/native";
 
-const widthScreen = Math.floor(Dimensions.get('window'). width);
+const widthScreen = Math.floor(Dimensions.get("window").width);
 
 export const Container = styled.TouchableOpacity`
   width: ${widthScreen - 46}px;
-  height: 70px;
-  border-radius: 14px;
+  height: 66px;
+  border-radius: 12px;
   background-color: #eee;
   flex-direction: row;
   justify-content: space-between;
@@ -22,13 +22,15 @@ export const WrapperUser = styled.View`
 `;
 
 export const Avatar = styled.Image`
-  height: 50px;
-  width: 50px;
+  height: 48px;
+  width: 48px;
   border-radius: 12px;
-  margin: 0 10px;
+  margin-left: 10px;
+  margin-right: 16px;
 `;
 
 export const UserName = styled.Text`
   color: #898383;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 300;
 `;

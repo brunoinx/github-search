@@ -72,7 +72,7 @@ const UserRepo = () => {
       setFavorites((oldState) => [...oldState, { id, login, avatar_url }]);
     } else {
       setFavorites((oldState) => oldState);
-      Alert.alert("Ops...", "Esse usuário já foi favoritado.");
+      Alert.alert("Ops...", "Esse usuário já foi favoritado. 🧐");
     }
 
     setIsFavorited((oldState) => !oldState);

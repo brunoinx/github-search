@@ -50,5 +50,5 @@ export const TitleListUsers = styled.Text`
   color: #898383;
   font: 18px sans-serif;
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 `;

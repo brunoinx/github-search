@@ -1,14 +1,14 @@
 import React, { useCallback } from "react";
-import { FlatList, Text } from "react-native";
+import { FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
 
 import * as S from "./styles";
 
-import { useFavorited } from "../../contexts/FavoritesContext";
-import Header from "../../components/Header";
+import Template from "../../components/Template";
 import CardUserGithub from "../../components/CardUserGithub";
+import { useFavorited } from "../../contexts/FavoritesContext";
 
 const FavoritedUsers = () => {
   const { favorites, setFavorites } = useFavorited();
@@ -48,34 +48,30 @@ const FavoritedUsers = () => {
   };
 
   return (
-    <S.Container>
-      <Header />
+    <Template>
+      <S.Title>Meus Favoritos</S.Title>
 
-      <S.MainContent>
-        <S.Title>Meus Favoritos</S.Title>
-
-        <FlatList
-          data={favorites}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => (
-            <CardUserGithub
-              name={item.login}
-              avatar={item.avatar_url}
-              icon="trash"
+      <FlatList
+        data={favorites}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({ item }) => (
+          <CardUserGithub
+            name={item.login}
+            avatar={item.avatar_url}
+            icon="trash"
+          >
+            <S.TrashButton
+              activeOpacity={0.6}
+              onPress={() => handleExcludeUserFavorite(item.id)}
             >
-              <S.TrashButton
-                activeOpacity={0.6}
-                onPress={() => handleExcludeUserFavorite(item.id)}
-              >
-                <Entypo name="trash" size={24} color="#e5383b" />
-              </S.TrashButton>
-            </CardUserGithub>
-          )}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ marginBottom: 100 }}
-        />
-      </S.MainContent>
-    </S.Container>
+              <Entypo name="trash" size={24} color="#e5383b" />
+            </S.TrashButton>
+          </CardUserGithub>
+        )}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ marginBottom: 100 }}
+      />
+    </Template>
   );
 };
 

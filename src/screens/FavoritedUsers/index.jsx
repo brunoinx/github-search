@@ -69,7 +69,7 @@ const FavoritedUsers = () => {
           </CardUserGithub>
         )}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ marginBottom: 100 }}
+        contentContainerStyle={{ paddingBottom: 210 }}
       />
     </Template>
   );

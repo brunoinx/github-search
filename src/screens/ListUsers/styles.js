@@ -6,7 +6,7 @@ export const WrapperInput = styled.View`
   align-items: center;
   justify-content: space-around;
 
-  margin: 42px 0 20px;
+  margin: 34px 0 20px;
 `;
 
 export const InputSearch = styled.TextInput`
@@ -25,7 +25,7 @@ export const ButtonSearch = styled.TouchableOpacity`
   background-color: #408aff;
   border-radius: 10px;
   height: 48px;
-  width: 62px;
+  width: 56px;
 `;
 
 export const Image = styled.Image`
@@ -37,6 +37,7 @@ export const Image = styled.Image`
 export const LabelVoid = styled.Text`
   width: 260px;
   color: #898383;
+  opacity: 0.6;
   font-size: 16px;
   text-align: center;
 
@@ -44,11 +45,10 @@ export const LabelVoid = styled.Text`
   margin-top: 12px;
 `;
 
-// Usuário encontrado
 export const TitleListUsers = styled.Text`
   width: 100%;
   color: #898383;
   font: 18px sans-serif;
   text-align: left;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 `;

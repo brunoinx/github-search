@@ -21,6 +21,6 @@ export const ButtonFavorited = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
 
-  border-radius: 22px;
+  border-radius: 8px;
   background-color: #d6d6d6;
 `;

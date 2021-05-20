@@ -6,7 +6,7 @@ const widthScreen = Math.floor(Dimensions.get("window").width);
 export const Container = styled.TouchableOpacity`
   width: ${widthScreen - 46}px;
   height: 66px;
-  border-radius: 12px;
+  border-radius: 8px;
   background-color: #eee;
   flex-direction: row;
   justify-content: space-between;

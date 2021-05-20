@@ -21,8 +21,9 @@ export default function TabRoutes() {
           alignItems: "center",
           justifyContent: "center",
           borderTopColor: "#d6d6d6",
-          borderTopWidth: 2,
-          paddingVertical: 10,
+          borderTopWidth: 1,
+          paddingBottom: 8,
+          paddingTop: 10,
         },
       }}
     >

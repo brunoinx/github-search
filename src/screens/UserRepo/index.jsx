@@ -14,7 +14,7 @@ import CardGitRepo from "../../components/CardGitRepo";
 import { useFavorited } from "../../contexts/FavoritesContext";
 
 const UserRepo = () => {
-  const [username, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [repoList, setRepoList] = useState([]);
   const {
     favorites,
@@ -45,7 +45,7 @@ const UserRepo = () => {
       const { data } = await api.get(`users/${username}/repos`);
 
       setRepoList(data);
-      setUserName(username);
+      setUsername(username);
       setIsLoading(false);
     };
     handleSearchRepos();
@@ -74,11 +74,15 @@ const UserRepo = () => {
     } else {
       setFavorites((oldState) => oldState);
       Alert.alert("Ops...", "Esse usuário já foi favoritado. 🧐");
+      navigation.navigate("Favoritos");
+      return;
     }
 
     setIsFavorited((oldState) => !oldState);
 
-    navigation.navigate("Favoritos");
+    setTimeout(() => {
+      navigation.navigate("Favoritos");
+    }, 1000);
   };
 
   return (
@@ -103,7 +107,7 @@ const UserRepo = () => {
           data={repoList}
           renderItem={({ item }) => <CardGitRepo name={item.name} />}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 10 }}
+          contentContainerStyle={{ paddingBottom: 240 }}
         />
       )}
     </Template>

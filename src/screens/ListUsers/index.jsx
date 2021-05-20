@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Alert, FlatList, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
@@ -19,10 +19,9 @@ function ListUsers() {
 
   const navigation = useNavigation();
 
-  const handleSearchUser = async () => {
+  const handleSearchUser = useCallback(async () => {
     if (!userInput) {
-      Alert.alert("Digite alguma coisa");
-      return;
+      return Alert.alert("Digite alguma coisa");
     }
 
     const { data } = await api.get(`search/users?q=${userInput}`);
@@ -30,18 +29,12 @@ function ListUsers() {
     setUserList(data.items);
     setIsFilled(true);
     Keyboard.dismiss(false);
-  };
+  }, [userInput]);
 
-  const handleNavigateToRepos = async (item) => {
-    try {
-      await AsyncStorage.setItem("@gitusers:inputname", userList[item].login);
+  const handleNavigateToRepos = (item) => {
+    const { id, login, avatar_url } = userList[item];
 
-      const { id, login, avatar_url } = userList[item];
-
-      navigation.navigate("UserRepo", { id, login, avatar_url });
-    } catch (e) {
-      console.log(e);
-    }
+    navigation.navigate("ListRepositories", { id, login, avatar_url });
   };
 
   return (

@@ -13,9 +13,9 @@ import CardGitRepo from "../../components/CardGitRepo";
 
 import { useFavorited } from "../../contexts/FavoritesContext";
 
-const UserRepo = () => {
+const ListRepositories = () => {
   const [username, setUsername] = useState("");
-  const [repoList, setRepoList] = useState([]);
+  const [listRepositories, setListRepositories] = useState([]);
   const {
     favorites,
     setFavorites,
@@ -37,15 +37,13 @@ const UserRepo = () => {
     }, [])
   );
 
-  // Carregar os repositórios
+  // Load repositories
   useEffect(() => {
     const handleSearchRepos = async () => {
-      const username = await AsyncStorage.getItem("@gitusers:inputname");
+      const { data } = await api.get(`users/${login}/repos`);
 
-      const { data } = await api.get(`users/${username}/repos`);
-
-      setRepoList(data);
-      setUsername(username);
+      setListRepositories(data);
+      setUsername(login);
       setIsLoading(false);
     };
     handleSearchRepos();
@@ -55,9 +53,9 @@ const UserRepo = () => {
   useEffect(() => {
     const storageListFavorites = async () => {
       try {
-        const favsString = JSON.stringify(favorites);
+        const favs = JSON.stringify(favorites);
 
-        await AsyncStorage.setItem("@githubsearch:favs", favsString);
+        await AsyncStorage.setItem("@githubsearch:favs", favs);
       } catch (error) {
         console.log(`Não salvou... :( \n${error}`);
       }
@@ -74,8 +72,8 @@ const UserRepo = () => {
     } else {
       setFavorites((oldState) => oldState);
       Alert.alert("Ops...", "Esse usuário já foi favoritado. 🧐");
-      navigation.navigate("Favoritos");
-      return;
+
+      return navigation.navigate("Favoritos");
     }
 
     setIsFavorited((oldState) => !oldState);
@@ -103,8 +101,8 @@ const UserRepo = () => {
         <ActivityIndicator size="large" color="#365CE5" />
       ) : (
         <FlatList
+          data={listRepositories}
           keyExtractor={(item) => String(item.id)}
-          data={repoList}
           renderItem={({ item }) => <CardGitRepo name={item.name} />}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 240 }}
@@ -114,4 +112,4 @@ const UserRepo = () => {
   );
 };
 
-export default UserRepo;
+export default ListRepositories;

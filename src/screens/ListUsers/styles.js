@@ -29,9 +29,10 @@ export const ButtonSearch = styled.TouchableOpacity`
 `;
 
 export const Image = styled.Image`
-  width: 180px;
-  height: 180px;
-  margin-top: 20px;
+  width: 160px;
+  height: 160px;
+  opacity: 0.7;
+  margin-top: 50px;
 `;
 
 export const LabelVoid = styled.Text`

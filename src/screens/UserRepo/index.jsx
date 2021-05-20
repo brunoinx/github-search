@@ -4,13 +4,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { useFocusEffect } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
-import api from "../../service/api";
 
+import api from "../../service/api";
 import * as S from "./styles";
 
-import { useFavorited } from "../../contexts/FavoritesContext";
-import Header from "../../components/Header";
+import Template from "../../components/Template";
 import CardGitRepo from "../../components/CardGitRepo";
+
+import { useFavorited } from "../../contexts/FavoritesContext";
 
 const UserRepo = () => {
   const [username, setUserName] = useState("");
@@ -81,35 +82,31 @@ const UserRepo = () => {
   };
 
   return (
-    <S.Container>
-      <Header />
+    <Template>
+      <S.WrapperTitle>
+        <S.TitleListRepo>Favoritar {username}?</S.TitleListRepo>
 
-      <S.MainContent>
-        <S.WrapperTitle>
-          <S.TitleListRepo>Favoritar {username}?</S.TitleListRepo>
-
-          <S.ButtonFavorited activeOpacity={0.7} onPress={handleFavoringUsers}>
-            <FontAwesome
-              name="heart"
-              size={28}
-              color={isFavorited ? "#e5383b" : "#FFF"}
-            />
-          </S.ButtonFavorited>
-        </S.WrapperTitle>
-
-        {isLoading ? (
-          <ActivityIndicator size="large" color="#365CE5" />
-        ) : (
-          <FlatList
-            keyExtractor={(item) => String(item.id)}
-            data={repoList}
-            renderItem={({ item }) => <CardGitRepo name={item.name} />}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 10 }}
+        <S.ButtonFavorited activeOpacity={0.7} onPress={handleFavoringUsers}>
+          <FontAwesome
+            name="heart"
+            size={28}
+            color={isFavorited ? "#e5383b" : "#FFF"}
           />
-        )}
-      </S.MainContent>
-    </S.Container>
+        </S.ButtonFavorited>
+      </S.WrapperTitle>
+
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#365CE5" />
+      ) : (
+        <FlatList
+          keyExtractor={(item) => String(item.id)}
+          data={repoList}
+          renderItem={({ item }) => <CardGitRepo name={item.name} />}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 10 }}
+        />
+      )}
+    </Template>
   );
 };
 

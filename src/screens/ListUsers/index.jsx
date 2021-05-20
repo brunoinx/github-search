@@ -2,15 +2,16 @@ import React, { useCallback, useState } from "react";
 import { Alert, FlatList, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import * as S from "./styles";
 
-import Template from "../../components/Template";
 import api from "../../service/api";
 
+import Template from "../../components/Template";
+import OctocatVoid from "../../components/OctocatVoid";
 import CardUserGithub from "../../components/CardUserGithub";
-import octoCatImage from "../../assets/octocat.png";
+
+import octoCatImage from "../../assets/octocat-detective.png";
 
 function ListUsers() {
   const [userInput, setUserInput] = useState("");
@@ -51,12 +52,10 @@ function ListUsers() {
       </S.WrapperInput>
 
       {!isFilled ? (
-        <>
-          <S.Image source={octoCatImage} />
-          <S.LabelVoid>
-            Está meio vazio por aqui! Busque por um usuário
-          </S.LabelVoid>
-        </>
+        <OctocatVoid
+          msg={`Está meio vazio por aqui... \nBusque por um usuário!`}
+          img={octoCatImage}
+        />
       ) : (
         <>
           <S.TitleListUsers>Usuários encontrados</S.TitleListUsers>

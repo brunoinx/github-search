@@ -7,7 +7,10 @@ import { Entypo } from "@expo/vector-icons";
 import * as S from "./styles";
 
 import Template from "../../components/Template";
+import OctocatVoid from "../../components/OctocatVoid";
 import CardUserGithub from "../../components/CardUserGithub";
+import octoCatImage from "../../assets/octocat.png";
+
 import { useFavorited } from "../../contexts/FavoritesContext";
 
 const FavoritedUsers = () => {
@@ -51,26 +54,33 @@ const FavoritedUsers = () => {
     <Template>
       <S.Title>Meus Favoritos</S.Title>
 
-      <FlatList
-        data={favorites}
-        keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => (
-          <CardUserGithub
-            name={item.login}
-            avatar={item.avatar_url}
-            icon="trash"
-          >
-            <S.TrashButton
-              activeOpacity={0.6}
-              onPress={() => handleExcludeUserFavorite(item.id)}
+      {favorites.length !== 0 ? (
+        <FlatList
+          data={favorites}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => (
+            <CardUserGithub
+              name={item.login}
+              avatar={item.avatar_url}
+              icon="trash"
             >
-              <Entypo name="trash" size={24} color="#e5383b" />
-            </S.TrashButton>
-          </CardUserGithub>
-        )}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 210 }}
-      />
+              <S.TrashButton
+                activeOpacity={0.6}
+                onPress={() => handleExcludeUserFavorite(item.id)}
+              >
+                <Entypo name="trash" size={24} color="#e5383b" />
+              </S.TrashButton>
+            </CardUserGithub>
+          )}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 210 }}
+        />
+      ) : (
+        <OctocatVoid
+          msg="Sua lista de usuários está vazia... Favorite um usuário!"
+          img={octoCatImage}
+        />
+      )}
     </Template>
   );
 };

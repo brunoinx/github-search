@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import Home from "../screens/Home";
+import ListUsers from "../screens/ListUsers";
 import FavoritedUsers from "../screens/FavoritedUsers";
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -28,7 +28,7 @@ export default function TabRoutes() {
     >
       <Screen
         name="Home"
-        component={Home}
+        component={ListUsers}
         options={{
           tabBarIcon: ({ size, color }) => (
             <FontAwesome name="search" size={size} color={color} />

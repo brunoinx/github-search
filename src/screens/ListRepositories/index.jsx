@@ -57,7 +57,7 @@ const ListRepositories = () => {
 
         await AsyncStorage.setItem("@githubsearch:favs", favs);
       } catch (error) {
-        console.log(`Não salvou... :( \n${error}`);
+        console.log(`Não salvou ${error}`);
       }
     };
 
@@ -70,8 +70,8 @@ const ListRepositories = () => {
     if (alreadyExist < 0) {
       setFavorites((oldState) => [...oldState, { id, login, avatar_url }]);
     } else {
-      setFavorites((oldState) => oldState);
       Alert.alert("Ops...", "Esse usuário já foi favoritado. 🧐");
+      setFavorites((oldState) => oldState);
 
       return navigation.navigate("Favoritos");
     }

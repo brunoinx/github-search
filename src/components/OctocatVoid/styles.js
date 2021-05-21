@@ -1,4 +1,14 @@
 import styled from "styled-components/native";
+import { Dimensions } from "react-native";
+
+const heightTotal = Math.ceil(Dimensions.get("window").height);
+
+export const Container = styled.View`
+  width: 100%;
+  height: ${(heightTotal * 0.8) / 2}px;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const Image = styled.Image`
   width: 160px;

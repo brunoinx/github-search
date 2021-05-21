@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { Alert, FlatList, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
@@ -20,8 +20,10 @@ function ListUsers() {
 
   const navigation = useNavigation();
 
-  const handleSearchUser = useCallback(async () => {
+  const handleSearchUser = async () => {
     if (!userInput) {
+      setIsFilled(false);
+      Keyboard.dismiss(false);
       return Alert.alert("Digite alguma coisa");
     }
 
@@ -30,7 +32,7 @@ function ListUsers() {
     setUserList(data.items);
     setIsFilled(true);
     Keyboard.dismiss(false);
-  }, [userInput]);
+  };
 
   const handleNavigateToRepos = (item) => {
     const { id, login, avatar_url } = userList[item];

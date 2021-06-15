@@ -13,7 +13,7 @@ const Home = () => {
 
         <S.MainContent>
           <ListUsers
-            labelVoid="Está meio vazio por aqui! Busque por um usuário"
+            labelVoid="Está meio vazio por aqui! Busque por um user"
             title="Usuários encontrados"
           />
         </S.MainContent>

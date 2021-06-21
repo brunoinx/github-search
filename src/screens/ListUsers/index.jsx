@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Alert, FlatList, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
 
 import * as S from "./styles";
@@ -19,6 +20,9 @@ function ListUsers() {
   const [isFilled, setIsFilled] = useState(false);
 
   const navigation = useNavigation();
+  const heightTabBar = useBottomTabBarHeight();
+
+  console.log(heightTabBar);
 
   const handleSearchUser = async () => {
     if (!userInput) {
@@ -75,7 +79,7 @@ function ListUsers() {
               </CardUserGithub>
             )}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 276 }}
+            contentContainerStyle={{ paddingBottom: heightTabBar }}
           />
         </>
       )}

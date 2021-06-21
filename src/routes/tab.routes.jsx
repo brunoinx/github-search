@@ -17,9 +17,7 @@ export default function TabRoutes() {
         labelPosition: "below-icon",
         labelStyle: { fontSize: 12 },
         style: {
-          height: 58,
           alignItems: "center",
-          justifyContent: "center",
           borderTopColor: "#d6d6d6",
           borderTopWidth: 1,
           paddingBottom: 8,

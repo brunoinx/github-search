@@ -5,7 +5,6 @@ export const WrapperInput = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-
   margin: 34px 0 20px;
 `;
 
